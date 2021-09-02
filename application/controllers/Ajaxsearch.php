@@ -3,9 +3,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ajaxsearch extends CI_Controller {
 
-	function index()
-	{
-		$this->load->view('ajaxsearch');
+    public function __construct(){
+    parent::__construct();
+      $this->load->model('Admin_model');
+    }
+
+    function index(){
+
+    	$this->load->view('login');
+
+    	$jwt = new JWT();
+
+    	$JwtSecretKey = "loginsecretcode";
+
+    	$email=$this->input->post('email');
+    	$password=$this->input->post('password');
+
+    	$result = $this->Admin_model->check_login($email,$password);
+
+    	if($result->num_rows()==1){
+
+    	$token = $jwt->encode($result,$JwtSecretKey,'HS256');
+        json_encode($token);
+    	$this->load->view('ajaxsearch');
+
+        }
+    	
+    
+    }
+
+	// function index()
+	// {
+	// 	$this->load->view('ajaxsearch');
+	// }
+
+	public function token(){
+
 	}
 
 	function fetchdata()
@@ -20,7 +53,7 @@ class Ajaxsearch extends CI_Controller {
 		$data = $this->ajaxsearch_model->fetch_data($query);
 		$output .= '
 		<div class="table-responsive">
-					<table class="table table-bordered table-striped">
+					<table class="table table-bordered table-striped" style="background-color:white;" width="100%" height="100%">
 						<tr>
 							<th>SName</th>
 							<th>Current_Market_Price</th>
@@ -70,3 +103,4 @@ class Ajaxsearch extends CI_Controller {
 	}
 	
 }
+
