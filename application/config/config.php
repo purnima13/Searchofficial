@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/live-data-search-in-codeigniter-using-ajax-jquery/';
+$config['base_url'] = 'http://searchofficial.epizy.com/'';
 
 /*
 |--------------------------------------------------------------------------
